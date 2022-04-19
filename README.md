@@ -2,10 +2,8 @@ I've been developing Rails apps
 [since 2006](https://www.linkedin.com/in/woodie/),
 and I even built a simple Rails clone called
 [Dubious](https://github.com/mirah/dubious) in
-[Mirah](https://github.com/mirah/mirah) that I
-[presented at JRubyKaigi2010](https://www.youtube.com/watch?v=keTHt3wf4HU)
-in Tsukuba, Japan. This was useful for scaling Rails apps on Google App Engine for Java.
-
+[Mirah](https://github.com/mirah/mirah).
+This was useful for scaling Rails apps on Google App Engine for Java.
 Sometimes, I just like to carry a smart feature phone. I created Caltrain apps for
 [KaiOS](https://github.com/woodie/next-caltrain-pwa) and
 [J2ME](https://github.com/woodie/Caltrain-Schedule-MIDlet).
