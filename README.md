@@ -4,7 +4,8 @@ and I even built a simple Rails clone called
 [Dubious](https://github.com/mirah/dubious) in
 [Mirah](https://github.com/mirah/mirah).
 This was useful for scaling Rails apps on Google App Engine for Java.
-Sometimes, I just like to carry a smart feature phone. I created Caltrain apps for
+
+I created Caltrain apps for
 [KaiOS](https://github.com/woodie/next-caltrain-pwa) and
 [J2ME](https://github.com/woodie/Caltrain-Schedule-MIDlet).
 The KaiOS version is a
