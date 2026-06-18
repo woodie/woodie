@@ -10,13 +10,14 @@ Sometimes, I just like to carry a smart feature phone. I created Caltrain apps f
 The KaiOS version is a
 [PWA](http://next-caltrain-pwa.appspot.com/)
 written with VanillaJS.
+This has onbiously evolved into a smartphone app in [Swith](https://github.com/woodie/next-caltrain-swift) and [Kotlin](https://github.com/woodie/next-caltrain-kotlin).
 
-<a href="https://raw.githubusercontent.com/woodie/Caltrain-Schedule-MIDlet/master/docs/main.jpg"><img
-   src="https://raw.githubusercontent.com/woodie/Caltrain-Schedule-MIDlet/master/docs/main.jpg"
-   height="150"></a> &nbsp; <a
-   href="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg"><img
+<img src="https://raw.githubusercontent.com/woodie/Caltrain-Schedule-MIDlet/master/docs/main.jpg"
+   height="150"></a> &nbsp; <img
    src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg"
-   height="150"></a>
+   height="150"></a> &nbsp; <img 
+   src="https://github.com/user-attachments/assets/0e299020-d727-43b3-be5b-1bcc6129ebd6"
+   height="150">
 
 Additionally, I like to implement algorithms
 [in several languages](https://github.com/woodie/coding_challenges)
