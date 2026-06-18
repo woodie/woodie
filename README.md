@@ -14,7 +14,7 @@ The KaiOS version is a
 written with VanillaJS.
 
 This project has obviously evolved into a smartphone app
-in [Swith](https://github.com/woodie/next-caltrain-swift) 
+in [Swift](https://github.com/woodie/next-caltrain-swift) 
 and [Kotlin](https://github.com/woodie/next-caltrain-kotlin).
 
 <img src="https://raw.githubusercontent.com/woodie/Caltrain-Schedule-MIDlet/master/docs/main.jpg"
