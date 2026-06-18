@@ -11,7 +11,9 @@ I created Caltrain apps for
 The KaiOS version is a
 [PWA](http://next-caltrain-pwa.appspot.com/)
 written with VanillaJS.
-This has onbiously evolved into a smartphone app in [Swith](https://github.com/woodie/next-caltrain-swift) and [Kotlin](https://github.com/woodie/next-caltrain-kotlin).
+This project has onbiously evolved into a smartphone app
+in [Swith](https://github.com/woodie/next-caltrain-swift) 
+and [Kotlin](https://github.com/woodie/next-caltrain-kotlin).
 
 <img src="https://raw.githubusercontent.com/woodie/Caltrain-Schedule-MIDlet/master/docs/main.jpg"
    height="150"></a> &nbsp; <img
