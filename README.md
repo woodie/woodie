@@ -5,13 +5,15 @@ and I even built a simple Rails clone called
 [Mirah](https://github.com/mirah/mirah).
 This was useful for scaling Rails apps on Google App Engine for Java.
 
-I created Caltrain apps for
-[KaiOS](https://github.com/woodie/next-caltrain-pwa) and
-[J2ME](https://github.com/woodie/Caltrain-Schedule-MIDlet).
+I created Caltrain apps with
+[J2ME](https://github.com/woodie/Caltrain-Schedule-MIDlet)
+and later for
+[KaiOS](https://github.com/woodie/next-caltrain-pwa).
 The KaiOS version is a
 [PWA](http://next-caltrain-pwa.appspot.com/)
 written with VanillaJS.
-This project has onbiously evolved into a smartphone app
+
+This project has obviously evolved into a smartphone app
 in [Swith](https://github.com/woodie/next-caltrain-swift) 
 and [Kotlin](https://github.com/woodie/next-caltrain-kotlin).
 
