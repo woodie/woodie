@@ -39,3 +39,39 @@ known gotchas in the code.
 When picking up a project cold, reading the repo's own `docs/COWORK.md` (if
 present), then `README.md`, then the key source files is enough to get oriented
 before making any changes.
+
+## Typos and unclear input
+
+The user often hits enter before catching typos. Read messages charitably and
+proceed on best-guess intent for small or obvious errors. For cases where a
+typo could meaningfully change direction — "not" vs "now", "remove" vs "move",
+anything where the wrong interpretation would send a session down the wrong path
+— stop and ask before diving in.
+
+## Test structure
+
+Tests should be structured hierarchically so the output reads like
+specification documentation in RSpec `-fd` / Quick-Nimble style. The structure
+should make it easy to add new cases inside an existing context rather than
+requiring new top-level blocks. BDD frameworks that don't expose this hierarchy
+in their output are missing the point.
+
+Code should be organized in modules or classes so that units can be tested in
+isolation, without going through web, mail, or other external interfaces. If
+a piece of code can't be tested without hitting an external interface, that's
+a signal to refactor, not to write an integration test.
+
+## Comments
+
+Do not write "novels" above methods. Long inline comments become noise that
+obscures the basic flow, and they go stale. The rule: one line referencing a
+relevant design doc (`docs/COWORK.md`, `docs/DELIVERY.md`, etc.) if context is
+genuinely needed; otherwise nothing. Decision history and rationale belong in
+docs, not in code comments. A stale comment is worse than no comment.
+
+## Code style
+
+Match the spirit and best practices of the existing code — don't impose new
+patterns. If an optimization or refactor could impact maintainability, ask
+explicitly rather than just doing it. The goal is code the user can read and
+maintain, not code that showcases what Claude finds elegant.
