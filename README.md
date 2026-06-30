@@ -1,10 +1,3 @@
-I've been developing Rails apps
-[since 2006](https://www.linkedin.com/in/woodie/),
-and I even built a simple Rails clone called
-[Dubious](https://github.com/mirah/dubious) in
-[Mirah](https://github.com/mirah/mirah).
-This was useful for scaling Rails apps on Google App Engine for Java.
-
 I created Caltrain apps in [Swift](https://github.com/woodie/next-caltrain-swift) 
 and [Kotlin](https://github.com/woodie/next-caltrain-kotlin)
 (a port of [KaiOS](http://next-caltrain-pwa.appspot.com/)
