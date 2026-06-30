@@ -15,6 +15,3 @@ and [ginkgo-fd](https://github.com/woodie/ginkgo-fd) for Go.
 
 Some old talks: [JRuby on App Engine](https://www.slideshare.net/slideshow/railsconf-2010/4480676) at Railsconf 2010 in Baltimore,<br>
 and [Mirah and Dubious](https://www.slideshare.net/slideshow/appengine-janight10/5093393) at Appengine ja-night-10 at Google in Tokyo.
-
-<img width="200" alt="rc" src="https://github.com/user-attachments/assets/02db64fa-6a47-41d1-8bd3-c056f0269b0f" /> &nbsp; 
-<img width="200" alt="md" src="https://github.com/user-attachments/assets/ab508e01-265c-4516-b113-bc9b76b35219" />
