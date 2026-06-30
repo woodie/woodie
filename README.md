@@ -17,5 +17,5 @@ Want RSpec's `-fd` for other languages,
 see [xctidy](https://github.com/woodie/xctidy) for Swift,
 and [ginkgo-fd](https://github.com/woodie/ginkgo-fd) for Go.
 
-<img width="400" alt="ginkgo-fd" src="https://github.com/user-attachments/assets/0778ddd6-3801-4f69-bfd1-fe480b30799d" />
-<img width="400" alt="xctidf-fd" src="https://github.com/user-attachments/assets/74f450c7-75cd-4fb6-961e-86c434f3b8b2" /> &nbsp; 
+<img width="300" alt="ginkgo-fd" src="https://github.com/user-attachments/assets/0778ddd6-3801-4f69-bfd1-fe480b30799d" />
+<img width="300" alt="xctidf-fd" src="https://github.com/user-attachments/assets/74f450c7-75cd-4fb6-961e-86c434f3b8b2" /> &nbsp; 
