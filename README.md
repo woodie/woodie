@@ -13,9 +13,9 @@ and [J2ME](https://github.com/woodie/Caltrain-Schedule-MIDlet) versions).
 <img src="https://github.com/user-attachments/assets/0e299020-d727-43b3-be5b-1bcc6129ebd6" height="150"> &nbsp; <img
    src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg" height="150"></a> 
 
-Additionally, I like to implement algorithms
-[in several languages](https://github.com/woodie/coding_challenges)
-to refresh my memory on syntax and features.
-I've also created some obscure Docker images like
-[nanoserver-ruby](https://github.com/woodie/nanoserver-ruby) and
-[geminabox](https://github.com/woodie/geminabox-ldap).
+Want RSpec's `-fd` for other languages, 
+see [xctidy](https://github.com/woodie/xctidy) for Swift,
+and [ginkgo-fd](https://github.com/woodie/ginkgo-fd) for Go.
+
+<img width="400" alt="ginkgo-fd" src="https://github.com/user-attachments/assets/0778ddd6-3801-4f69-bfd1-fe480b30799d" />
+<img width="400" alt="xctidf-fd" src="https://github.com/user-attachments/assets/74f450c7-75cd-4fb6-961e-86c434f3b8b2" /> &nbsp; 
