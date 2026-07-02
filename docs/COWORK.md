@@ -69,6 +69,15 @@ relevant design doc (`docs/COWORK.md`, `docs/DELIVERY.md`, etc.) if context is
 genuinely needed; otherwise nothing. Decision history and rationale belong in
 docs, not in code comments. A stale comment is worse than no comment.
 
+Default to zero comments per method/fixture/test case, not one. A well-named
+method, variable, or `it`/`context` description often makes a comment
+redundant on its own -- if the comment would just restate what the name
+already says, skip it. This applies per-instance, not just in aggregate:
+adding one line above every method in a file is still "a ton of comments"
+even though each individual line looks small next to the "novel" it's not
+writing. Reach for a comment only when something is genuinely non-obvious
+from the name and surrounding code alone.
+
 ## Code style
 
 Match the spirit and best practices of the existing code — don't impose new
