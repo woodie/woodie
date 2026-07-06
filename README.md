@@ -1,6 +1,6 @@
 I created Caltrain apps in [Swift](https://github.com/woodie/next-caltrain-swift) 
 and [Kotlin](https://github.com/woodie/next-caltrain-kotlin)
-(a port of [KaiOS](http://next-caltrain-pwa.appspot.com/)
+(a port of [KaiOS](https://github.com/woodie/next-caltrain-pwa)
 and [J2ME](https://github.com/woodie/Caltrain-Schedule-MIDlet) versions).
 
 <img src="https://github.com/user-attachments/assets/0e299020-d727-43b3-be5b-1bcc6129ebd6" height="150"> &nbsp; <img
