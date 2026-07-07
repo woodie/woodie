@@ -56,6 +56,19 @@ should make it easy to add new cases inside an existing context rather than
 requiring new top-level blocks. BDD frameworks that don't expose this hierarchy
 in their output are missing the point.
 
+Each `context` establishes one concrete scenario -- via `beforeEach` (or a
+`let`/`var` it sets up) -- so that every `it` nested under it can just state
+what's true once that scenario holds. An `it` should never compute or derive
+the scenario itself (e.g. `let fifteenSecondsLater =
+downloadedAt.addingTimeInterval(15)` inside the `it` body): if a value only
+exists to set up the situation the test is about, it belongs in the
+enclosing `context`'s `beforeEach`, not buried in one `it`. This is what
+actually makes "add new cases inside an existing context" possible -- a
+second `it` can assert something else true under that same already-built
+scenario without re-deriving it. When an `it` is doing its own setup work,
+that's a sign the setup wants to become its own named `context` first, with
+the assertion(s) following as `it`s underneath it.
+
 Code should be organized in modules or classes so that units can be tested in
 isolation, without going through web, mail, or other external interfaces. If
 a piece of code can't be tested without hitting an external interface, that's
@@ -63,20 +76,35 @@ a signal to refactor, not to write an integration test.
 
 ## Comments
 
-Do not write "novels" above methods. Long inline comments become noise that
-obscures the basic flow, and they go stale. The rule: one line referencing a
-relevant design doc (`docs/COWORK.md`, `docs/DELIVERY.md`, etc.) if context is
-genuinely needed; otherwise nothing. Decision history and rationale belong in
-docs, not in code comments. A stale comment is worse than no comment.
+Do not write "novels" above methods or inline. Long comments become noise
+that obscures the basic flow, and they go stale. Default to zero comments
+per method/fixture/test case, not one. A well-named method, variable, or
+`it`/`context` description often makes a comment redundant on its own -- if
+the comment would just restate what the name already says, skip it. This
+applies per-instance, not just in aggregate: one line above every method in
+a file is still "a ton of comments" even though each individual line looks
+small next to the "novel" it's not writing.
 
-Default to zero comments per method/fixture/test case, not one. A well-named
-method, variable, or `it`/`context` description often makes a comment
-redundant on its own -- if the comment would just restate what the name
-already says, skip it. This applies per-instance, not just in aggregate:
-adding one line above every method in a file is still "a ton of comments"
-even though each individual line looks small next to the "novel" it's not
-writing. Reach for a comment only when something is genuinely non-obvious
-from the name and surrounding code alone.
+Reach for a comment only when something is genuinely non-obvious from the
+name and surrounding code alone -- and when you do, keep it to one
+self-contained line at the exact spot it's needed (a real gotcha: a subtle
+ordering requirement, a workaround for a library bug, a non-obvious
+invariant). The line doesn't need to cite a doc by name -- if a companion
+doc exists, treat it as expected reading alongside the code, the same way
+each repo's own `docs/COWORK.md` already is, rather than pointing to it
+from every single comment.
+
+Decision history, rejected alternatives, and longer rationale belong in
+docs, not in code comments. When that material adds up enough that
+one-liners aren't enough on their own (or when retrofitting a file that
+already has long-comment debt), pull it into a `docs/COMMENTS.md`,
+organized by file and then by the type/property/function each note is
+about -- see zouk's `docs/COWORK.md` ("Comment convention") for the pattern
+this was first established with. Retrofitting existing long comments is a
+comment-only edit (no behavior change): catalog every comment in the file,
+extract it into `docs/COMMENTS.md`, then strip the source down to at most
+one line per spot. A stale comment is worse than no comment, so keep code
+comments and docs in sync when either changes.
 
 ## Code style
 
