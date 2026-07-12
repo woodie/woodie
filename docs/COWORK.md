@@ -53,6 +53,17 @@ rev-parse HEAD` even when the tag is completely correct. Use `git rev-parse
 before comparing. Don't mistake this for the lock-file bug above; check
 `^{commit}` first.
 
+A `git push --tags` that runs right after a plain `git push` failed
+silently (a shell typo turning it into a no-op, in one real case — `it
+push` instead of `git push`) can still look completely successful: the tag
+push transfers whatever commit it points at along with it, even if that
+commit isn't the tip of any pushed branch yet. A tag-triggered release
+workflow builds correctly regardless, since it checks out the tag directly
+— but the branch itself (`main`) is left silently stale on the remote,
+missing whatever commit the tag was on. Don't treat a clean tag-push output
+as proof the preceding branch push also succeeded; check `git status -sb`
+for `ahead`/`behind` against the remote-tracking branch explicitly.
+
 ## Shared libraries across sibling repos
 
 `humane`/`humane-ruby`/`humane-swift` (consumed by `lambada`, `scandalous`,
