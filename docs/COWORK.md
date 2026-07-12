@@ -92,6 +92,24 @@ a real behavior change, the sequence that's worked cleanly:
    three consumer repos' `docs/COWORK.md` for what "wiring vs. duplicate
    coverage" looks like in practice.
 
+## Releasing across multiple repos
+
+When a release spans more than one repo -- tagging/pushing/`gh release
+create` across `humane`/`humane-ruby`/`humane-swift`, or a library plus its
+consumers (see "Shared libraries across sibling repos" above) -- hand off
+one copy-pasteable code block per repo/step, not a single block chaining
+several `cd`/`git`/`gh` commands together. A combined block that partly
+fails (a hung prompt, a slow network call, an interactive `gh` login, a
+lock file specific to one repo) can silently skip or block everything
+chained after it, and interleaved output from several repos makes it hard
+to tell which step actually ran where -- exactly the kind of thing "Pushing"
+above already flags for a single `git push`/`git push --tags` pair, just
+worse with three repos instead of one. Separate blocks let the user run and
+confirm each repo independently, re-paste just the one that failed, and
+only move to the next block once the previous one's output looks right.
+Slower to hand off than one big paste, but nothing to untangle when a step
+in the middle goes sideways.
+
 ## Remote/embedded shells
 
 `touch -d "N minutes ago"` (and similar natural-language relative dates) is
