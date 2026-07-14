@@ -157,6 +157,52 @@ When picking up a project cold, reading the repo's own `docs/COWORK.md` (if
 present), then `README.md`, then the key source files is enough to get oriented
 before making any changes.
 
+## Verification commands: prefer Makefile targets
+
+When a repo has a `Makefile` with `lint`/`test`/`check` targets (the
+`humane`/`humane-ruby`/`humane-swift` family all do, one Makefile per
+language wrapping that language's own toolchain), hand off `make
+build`/`make test`/`make lint`/`make check` in verification command blocks
+rather than the raw underlying commands (`go test`/`ginkgo-fd`, `bundle
+exec rspec`, `swift test`) -- `test`/`lint` are always verbose (the
+per-example breakdown), `check` is terse (silent on success, full log on
+any failure), matching across all three languages even though the literal
+commands underneath differ. Only fall back to the raw command directly if
+a repo has no Makefile, or the specific raw form itself is what's being
+discussed (e.g. diagnosing why one particular `swift test` flag matters).
+
+## Command-line first, GUI steps spelled out in full
+
+Woodie's default is command-line tools over GUI apps wherever a CLI path
+exists -- the next-caltrain-kotlin/next-caltrain-swift `sim.sh`/`Makefile`
+cleanup (merging scripts, adding `lint`/`test`/`check` targets, making the
+default simulator/emulator configurable) is a good example of the shape he
+likes: a small number of scriptable entry points instead of remembering IDE
+menus. He's also explicit that he doesn't have Xcode's GUI memorized ("no
+clue what happens in Xcode").
+
+Some steps genuinely have no CLI path, though -- `xcrun altool` is
+deprecated, and archiving/uploading an iOS build only works through Xcode's
+Organizer and the Distribute App wizard (see next-caltrain-swift's
+`docs/RELEASE.md`). For steps like this:
+
+- Don't assume familiarity with the app's menus/wizards -- spell out the
+  exact menu names and button labels, not a high-level "then archive and
+  upload it."
+- Offer a choice between an interactive walkthrough (computer-use teach
+  mode) and a plain-text explanation, per Cowork's teach-mode convention --
+  but expect plain-text to be the pick; that's what he's chosen every time
+  so far.
+- Confirm each step via a screenshot before describing the next one, rather
+  than dumping the whole sequence up front. App Store Connect's UI shifts
+  around occasionally, and a screenshot confirms which exact screen he
+  actually landed on before the next instruction is given.
+- Once a walkthrough proves out for a given task, fold the concrete
+  click-by-click steps into that project's own runbook (e.g.
+  `docs/RELEASE.md`) so the next release doesn't need the whole
+  conversation re-derived from scratch -- see the Archive/Distribute
+  section there for the version this produced.
+
 ## Typos and unclear input
 
 The user often hits enter before catching typos. Read messages charitably and
