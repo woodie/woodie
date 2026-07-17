@@ -13,5 +13,6 @@ and [ginkgo-fd](https://github.com/woodie/ginkgo-fd) for Go.
 <img width="300" alt="ginkgo-fd" src="https://github.com/user-attachments/assets/0778ddd6-3801-4f69-bfd1-fe480b30799d" /> &nbsp; 
 <img width="300" alt="xctidf-fd" src="https://github.com/user-attachments/assets/74f450c7-75cd-4fb6-961e-86c434f3b8b2" /> 
 
-Some old talks: [JRuby on App Engine](https://www.slideshare.net/slideshow/railsconf-2010/4480676) at Railsconf 2010 in Baltimore,<br>
-and [Mirah and Dubious](https://www.slideshare.net/slideshow/appengine-janight10/5093393) at Appengine ja-night-10 at Google in Tokyo.
+[Humane: ActionView and Foundation](https://johnwoodell.medium.com/humane-actionview-and-foundation-bfa38ae5a1c2)
+for Ruby, Go and Swift. [Zouk to the rescue](https://johnwoodell.medium.com/zouk-to-the-rescue-a1a6b8374b63) 
+for anyone with an old scanner.
