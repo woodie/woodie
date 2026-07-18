@@ -157,6 +157,19 @@ When picking up a project cold, reading the repo's own `docs/COWORK.md` (if
 present), then `README.md`, then the key source files is enough to get oriented
 before making any changes.
 
+## Go version policy: target current Go, don't preserve legacy compatibility
+
+When a `go.mod`'s `go` directive needs bumping to compile a real feature
+(generics, `t.Context()`, whatever's next), bump it to what that feature
+actually needs and move on -- don't add build tags, reflection fallbacks,
+or any other compatibility shim to keep working on an older toolchain.
+Upgrading Go itself is low-friction for anyone consuming these projects;
+contorting the code to dodge that upgrade is the "odd thing" worth
+avoiding, not the version bump. `spec`'s fork bumping from `go 1.13` to
+`go 1.24` for `Var[T]`/`it.Context()`, and `expect`'s own `go.mod` getting
+auto-bumped to `go 1.24` by `go mod tidy` to satisfy that dependency, are
+both fine as-is -- no need to chase a lower floor for either.
+
 ## Verification commands: prefer Makefile targets
 
 When a repo has a `Makefile` with `lint`/`test`/`check` targets (the
