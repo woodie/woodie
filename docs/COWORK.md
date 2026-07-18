@@ -274,6 +274,18 @@ extract it into `docs/COMMENTS.md`, then strip the source down to at most
 one line per spot. A stale comment is worse than no comment, so keep code
 comments and docs in sync when either changes.
 
+**Exception: mocking and stubbing.** A test double (a struct embedding a
+real interface, then overriding specific methods to intercept them -- the
+`spyT` pattern in `expect`) is worth breaking the one-line rule for. Go has
+no built-in mocking, the embed-then-override mechanism isn't obvious on
+sight, and getting it subtly wrong (calling a method that isn't overridden,
+assuming the embedded value is non-nil) is an easy mistake. Write a real
+comment at the point of use, wrapped at ~80 columns, explaining what the
+double does and how the mechanism works for someone seeing it cold. This
+is still about the current mechanism, not history -- why the technique was
+chosen over an alternative, or how the code evolved to look this way,
+still belongs in `docs/COWORK.md`, not the comment.
+
 ## Prose: don't lead a sentence with a lowercase project name
 
 Repo/library names stay lowercase in backticks (`expect`, `spec`, `gorderly`)
