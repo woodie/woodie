@@ -237,6 +237,17 @@ isolation, without going through web, mail, or other external interfaces. If
 a piece of code can't be tested without hitting an external interface, that's
 a signal to refactor, not to write an integration test.
 
+In Go specifically, never put a literal `/` inside a `describe`/`context`/
+`it` name when using `spec` (or plain `t.Run`). `spec`'s default flat mode
+joins nested names with `/`, `go test -v` uses `/` as the real subtest
+hierarchy separator, and `gorderly` rebuilds its tree by splitting on `/` --
+a literal slash in a name (e.g. naming a block after an HTTP route, `"GET
+/download/{filename}"`) is indistinguishable from those real separators and
+silently produces empty or misnested tree nodes. Found and fixed for real
+in `lambada`'s `cmd/lambada-web/main_test.go` -- see its `docs/COWORK.md`.
+Write route-shaped names without the slash instead (`"GET download by
+filename"`, not `"GET /download/{filename}"`).
+
 ## Comments
 
 No repo in this account should carry multi-line comment blocks in source --
