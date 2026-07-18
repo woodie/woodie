@@ -239,6 +239,11 @@ a signal to refactor, not to write an integration test.
 
 ## Comments
 
+No repo in this account should carry multi-line comment blocks in source --
+not `///` doc-comment paragraphs, not stacked `//`/`#` notes. That's a hard
+rule, not a style preference: if a comment needs more than one line, it
+belongs in that repo's `docs/COMMENTS.md`, not in the file.
+
 Do not write "novels" above methods or inline. Long comments become noise
 that obscures the basic flow, and they go stale. Default to zero comments
 per method/fixture/test case, not one. A well-named method, variable, or
@@ -268,6 +273,17 @@ comment-only edit (no behavior change): catalog every comment in the file,
 extract it into `docs/COMMENTS.md`, then strip the source down to at most
 one line per spot. A stale comment is worse than no comment, so keep code
 comments and docs in sync when either changes.
+
+## Prose: don't lead a sentence with a lowercase project name
+
+Repo/library names stay lowercase in backticks (`expect`, `spec`, `gorderly`)
+to match their real package names, but that collides with English
+capitalization at the start of a sentence -- "`expect` is a matcher
+library..." reads like a typo. Rephrase so the name isn't the first word,
+rather than capitalizing it or dropping the backticks: "With `expect`,
+you get..." or "Using `gorderly`, ..." instead of "`expect` lets you...".
+Applies to README/COWORK prose; headers are fine either way (e.g. "###
+`expect`'s matcher list").
 
 ## Code style
 
