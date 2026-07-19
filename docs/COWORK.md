@@ -4,6 +4,28 @@ Context for any Cowork session on any repo in this account. Project-specific
 history and design conventions live in each repo's own `docs/COWORK.md` where
 one exists; this file covers habits that apply everywhere.
 
+## Goal: RSpec's BDD joy, in every language, kept human-maintainable
+
+The throughline across `spec`/`expect`/`gorderly` and every language this
+account writes tests in (Go, Ruby, Swift, whatever's next) is bringing
+RSpec's actual experience -- real nested `describe`/`context`/`it` output,
+tests that read like documentation, a `subject`/`let` discipline that keeps
+scenarios DRY -- to languages that don't have it natively, without giving up
+the standard toolchain to get it. "Test structure" below is the concrete
+rulebook this produces.
+
+Equally important: the result has to be code Woodie can pick up himself, not
+just code Claude can maintain in the moment. That means boring, readable
+structure over clever abstraction, comments limited to what's genuinely
+non-obvious (see "Comments" below), and matching each language's own idiom
+rather than importing a pattern verbatim from wherever it was invented --
+Go's `before` hook standing in for Ruby's real `let` is the clearest example
+of this so far, not a compromise but the correct per-language translation.
+If a change only makes sense with a whole session's context behind it, it
+isn't done yet -- it needs to read cold, the same way "Working on unfamiliar
+stacks" below already assumes Claude itself has to read a repo cold to work
+on it.
+
 ## Git lock files
 
 If `git add`/`git commit` fails with `Unable to create '.git/index.lock'`
