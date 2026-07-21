@@ -26,6 +26,27 @@ isn't done yet -- it needs to read cold, the same way "Working on unfamiliar
 stacks" below already assumes Claude itself has to read a repo cold to work
 on it.
 
+## `docs/COWORK.md` is never what a README points to
+
+Every repo's `docs/COWORK.md` (this file included) is for Claude and Woodie
+to come up to speed on a project's own history, decisions, and gotchas --
+not for an outside reader. Every repo also needs something written on top
+of that for humans: `README.md` at minimum, `docs/DEVELOPMENT.md` too for
+anything with a real dev loop (build/test/deploy commands, config, ops
+runbooks -- see `lambada`'s or `xctidy`'s for the shape). A `README.md`/
+`DEVELOPMENT.md` must never send a reader to `docs/COWORK.md` for "the
+reasoning" or "why" behind something -- if a fact is worth a human reader
+knowing, it gets written where they'll actually see it (inline, or in
+whichever human doc covers that topic), not deferred to the Claude/Woodie
+file. Found and fixed across `spec`, `expect`, `huck`, and `humane-kotlin`'s
+READMEs in one pass -- each had a "see `docs/COWORK.md` for why" pointer
+that had to become a real inline sentence or two instead. `lambada`'s
+`docs/DEVELOPMENT.md` has one narrow, deliberately-marked exception (a
+file-descriptor leak theory, explicitly flagged "unconfirmed, not a
+documented fact") -- that's the only shape of COWORK.md reference that's
+ever acceptable in a human doc: pointing at something explicitly unvetted,
+never at settled reasoning a reader needs.
+
 ## Git lock files
 
 If `git add`/`git commit` fails with `Unable to create '.git/index.lock'`
@@ -67,6 +88,34 @@ a stale-`main`/lock-file mixup landing a tag on the wrong commit (see zouk's
 pre-flight checklist there). After committing, run `git log -1` and actually
 read it before tagging; after tagging, confirm the tag really points at that
 commit.
+
+Run the repo's `check` target (or `lint` + `test` if there's no combined
+`check`) *before* pushing and *before* tagging — not after. The sandbox has
+no toolchain for most repos here (see "Working on unfamiliar stacks"), so
+a commit gets made on inspection-only confidence; that's fine, but it
+means the sandbox itself can never confirm a change is clean, only the
+user's own Mac can. Hand off the verification command and wait for a real
+clean result *before* creating the tag or telling the user to push, not
+after. Both `gorderly` and `xctidy` got re-tagged mid-session (`gorderly`
+v0.3.0 → v0.3.1; `xctidy` v0.3.0 → v0.3.1 → v0.3.2) because tags and push
+instructions went out first and `make check`/CI caught real failures
+(`errcheck`, two `line_length` violations, one `identifier_name`
+violation) only afterward — each one forced a retag, and one of them
+(`gorderly`) collided with a push that had already landed on the remote
+mid-session, requiring a `git reset --hard origin/main` and a fresh
+forward commit to recover (see `gorderly`'s own `docs/COWORK.md` for that
+incident). None of this was harmful, but all of it was avoidable: run
+`check`, confirm clean, *then* tag, *then* tell the user to push.
+
+Don't amend a commit once there's any chance it's already been pushed.
+Amending rewrites the commit's hash; if the old hash already reached the
+remote (even if you weren't told so explicitly, or the push happened
+between your own turns), the local and remote histories now genuinely
+diverge — not a lock file, not a stale ref, a real fork — and the next
+push gets rejected as non-fast-forward. If a fix is needed after a commit
+might already be public, make it a new commit on top instead of an amend,
+and re-verify the fast-forward relationship (`git merge-base --is-ancestor
+origin/main HEAD`) before tagging or pushing again.
 
 For an **annotated** tag, `git rev-parse <tag>` returns the tag *object's*
 own hash, not the commit's — that will look like a mismatch against `git
@@ -331,6 +380,16 @@ double does and how the mechanism works for someone seeing it cold. This
 is still about the current mechanism, not history -- why the technique was
 chosen over an alternative, or how the code evolved to look this way,
 still belongs in `docs/COWORK.md`, not the comment.
+
+Simple substitutions get the same treatment, just in one line instead of a
+paragraph: swapping a package-level var for `t.TempDir()` (standing in for
+a real configured directory) is a stub too, even though the mechanism is
+trivial. Name it as such right at the call site --
+`attachmentDir = t.TempDir() // stub implementation` (`lambada`'s
+`attachments_test.go`, `main_test.go`, `scanfiles_test.go`) -- so a reader
+doesn't mistake it for arbitrary fixture setup. The rule is the same either
+way: if a value is standing in for something real, say so; the only thing
+that changes with complexity is one line versus several.
 
 ## Prose: don't lead a sentence with a lowercase project name
 
