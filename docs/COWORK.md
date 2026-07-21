@@ -208,6 +208,15 @@ practice. A `present_files`'d markdown file plus the plain command (no
 inline heredoc) is the more robust handoff; offer the heredoc version only
 if asked for something scriptable.
 
+## Command hand-offs: always cd to the repo first
+
+Woodie may have several terminals open across different repos at once, so a
+handed-off command should never assume "whichever directory the terminal
+happens to be in" — start every hand-off with an explicit `cd
+~/workspace/<repo>` rather than a bare `git push`/`make check`/etc. Applies
+to every command hand-off, not just git: the same ambiguity exists for
+`make`, `gh`, or any other repo-scoped command.
+
 ## Working on unfamiliar stacks
 
 Some repos here are in languages or frameworks where the Cowork sandbox has no
