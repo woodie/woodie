@@ -47,6 +47,32 @@ documented fact") -- that's the only shape of COWORK.md reference that's
 ever acceptable in a human doc: pointing at something explicitly unvetted,
 never at settled reasoning a reader needs.
 
+## READMEs stay in their own tool's lane
+
+A README's audience is someone landing on that one repo cold -- a Kotlin
+developer evaluating `kotidy`, say, not someone who already knows this
+account also has `gorderly` (Go) and `xctidy` (Swift). Even when a fact is
+completely true -- three tools deliberately share one style-naming
+convention, `kotidy`'s README used to say so explicitly -- naming the
+siblings in the README itself reads as a tour of the author's other
+projects, not information that reader needs to evaluate or use the tool in
+front of them. Found and fixed in `kotidy`'s own README: "Unlike `gorderly`
+(Go) and `xctidy` (Swift), ..." in the intro, a "matching the same shared
+surface `gorderly`/`xctidy` already document" aside in the styles table,
+repo names dropped into "Why not an existing plugin," a "Writing tests"
+section pointing at "every other Kotlin repo in this account," and an
+entire "Consumed by" section naming `next-caltrain-kotlin`/`humane-kotlin`/
+`huck` -- all cut. What's left reads like a tool with its own README: what
+it does, how to install and use it, why it exists next to the two real
+Gradle-ecosystem alternatives, how it's tested, and its actual
+limitations -- nothing that requires already knowing this account.
+
+Doesn't conflict with "`docs/COWORK.md` is never what a README points to"
+above -- that rule is about *where reasoning lives* (inline vs. deferred to
+a Claude/Woodie-only doc); this one is about *scope* -- a human reader's
+README should stay inside the one tool they're actually looking at, full
+stop, not just avoid pointing elsewhere for the reasoning behind it.
+
 ## Git lock files
 
 If `git add`/`git commit` fails with `Unable to create '.git/index.lock'`
