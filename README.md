@@ -6,9 +6,10 @@ and [J2ME](https://github.com/woodie/next-caltrain-j2me) versions).
 <img src="https://github.com/user-attachments/assets/0e299020-d727-43b3-be5b-1bcc6129ebd6" height="150"> &nbsp; <img
    src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg" height="150"></a> 
 
-Want RSpec's `-fd` for other languages, 
-see [xctidy](https://github.com/woodie/xctidy) for Swift,
-and [ginkgo-fd](https://github.com/woodie/ginkgo-fd) for Go.
+Want tidy test output, see
+[xctidy](https://github.com/woodie/xctidy) for Swift,
+[kotidy](https://github.com/woodie/kotidy) for Kotlin and
+[gorderly](https://github.com/woodie/gorderly) for Go.
 
 Follow me on [X](https://x.com/JohnWoodell) and see my recet posts on Medium:
 - [Humane: ActionView and Foundation](https://johnwoodell.medium.com/humane-actionview-and-foundation-bfa38ae5a1c2)
