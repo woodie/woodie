@@ -13,5 +13,5 @@ and [ginkgo-fd](https://github.com/woodie/ginkgo-fd) for Go.
 Follow me on [X](https://x.com/JohnWoodell) and see my recet posts on Medium:
 - [Humane: ActionView and Foundation](https://johnwoodell.medium.com/humane-actionview-and-foundation-bfa38ae5a1c2)
 for Ruby, Go and Swift.
-- [Zouk to the rescue](https://johnwoodell.medium.com/zouk-to-the-rescue-a1a6b8374b63) 
-for anyone with an old scanner.
+- [Zouk for macOS](https://johnwoodell.medium.com/zouk-to-the-rescue-a1a6b8374b63) and
+[Huck for Windows](https://johnwoodell.medium.com/huck-for-windows-ecef9c4dc13a) for anyone with an old scanner.
