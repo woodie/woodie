@@ -26,6 +26,15 @@ isn't done yet -- it needs to read cold, the same way "Working on unfamiliar
 stacks" below already assumes Claude itself has to read a repo cold to work
 on it.
 
+Why this matters more now, stated narrowly: a growing share of the code in
+every repo is co-written with AI, not typed by humans, which raises the
+stakes on tests reading clearly on their own. A test needs to be easy to
+understand, and every new feature or bug should be able to plug into the
+appropriate context. A developer may not be fluent in every language so
+the working bar here is deliberately narrow: keep tests legible enough that
+a non-expert can still judge whether the test is good and the associated
+code is maintainable by any human working in the repo.
+
 ## `docs/COWORK.md` is never what a README points to
 
 Every repo's `docs/COWORK.md` (this file included) is for Claude and Woodie
