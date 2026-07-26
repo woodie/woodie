@@ -82,6 +82,32 @@ a Claude/Woodie-only doc); this one is about *scope* -- a human reader's
 README should stay inside the one tool they're actually looking at, full
 stop, not just avoid pointing elsewhere for the reasoning behind it.
 
+## README openings: don't assume the reader knows the inspiration
+
+A README's opening line shouldn't assume the reader already knows the
+vocabulary a tool borrows its identity from -- found in `kwick`'s README,
+which opened with "RSpec/Quick conventions for Kotest's `DescribeSpec`"
+before ever saying what the tool actually does, assuming a Kotlin developer
+landing cold already knows RSpec (Ruby) and Quick (Swift). Lead with the
+concrete benefit in plain language instead -- "better, cleaner tests...
+with less duplication" -- then credit the inspiration afterward, once the
+reader already knows what they're looking at. Same "stay in your own
+tool's lane" principle as the section above, applied to the very first
+sentence a reader sees rather than to name-dropping sibling repos further
+down.
+
+## Gotchas/caveats sections: motivate before restricting
+
+A "Gotchas" or caveats section that opens straight with a restriction
+(e.g. "`lateinit` doesn't work for every shared-variable type") reads like
+an error message dropped mid-doc -- a reader has no idea why the mechanism
+was even relevant until they're told what it's normally used for. Found in
+`kwick`'s README: fixed by adding a sentence naming the convention being
+discussed first ("the usual way to share a value ... is `lateinit var`
+...") and only then describing what breaks it and the workaround. Applies
+anywhere a doc lists an exception or edge case -- state the normal
+pattern/rule before its exception, not the other way around.
+
 ## Git lock files
 
 If `git add`/`git commit` fails with `Unable to create '.git/index.lock'`
