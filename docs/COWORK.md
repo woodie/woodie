@@ -529,6 +529,29 @@ extract it into `docs/COMMENTS.md`, then strip the source down to at most
 one line per spot. A stale comment is worse than no comment, so keep code
 comments and docs in sync when either changes.
 
+**Narrative vs. real gotchas.** The one-line default above is a proxy for a
+sharper distinction, not the actual rule. Claude's own drafting habit tends
+toward narrative -- citing which other repo a pattern came from, restating
+how a design decision was reached, name-checking a doc section -- and that
+kind of content isn't helpful sitting next to the code, one line or ten;
+it belongs in `docs/COWORK.md` if it's worth keeping at all, or nowhere,
+not in a comment and not deferred to `docs/COMMENTS.md` either just because
+it got long. A real gotcha is different: something that would silently
+break, regress, or mislead a future maintainer if the comment weren't
+there -- a subtle ordering requirement, why a test case that looks
+redundant with its neighbors actually isn't, a workaround for a library
+bug. That's worth a few honest lines directly at the spot, if that's what
+it actually takes to state the risk clearly -- moving it to
+`docs/COMMENTS.md` for the sake of hitting one line is worse, not better,
+if the result is a comment that just points at a doc instead of saying the
+thing. Concrete case: a kwick dogfood test's comment first cited
+`docs/COWORK.md`'s "Scope for v1" and mirrored zouk's `ScanClientSpec` --
+that's the narrative version. Cut down to "the only case here that
+actually suspends, rather than just compiling against the suspend
+signature -- delete this and suspend support goes back to being
+unverified," it's a few lines, no doc pointer, and states the one thing a
+future maintainer actually needs to not accidentally regress.
+
 **Exception: mocking and stubbing.** A test double (a struct embedding a
 real interface, then overriding specific methods to intercept them -- the
 `spyT` pattern in `expect`) is worth breaking the one-line rule for. Go has
