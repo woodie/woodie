@@ -258,6 +258,45 @@ touch -d "@$(($(date +%s) - 2670))" filename   # 2670 seconds ago, unambiguous
 Reach for this form on the first sign of a suspicious result (future instead
 of past, wrong magnitude) rather than trying more relative-phrase variants.
 
+## Interactive zsh doesn't treat `#` as a comment by default
+
+Unlike bash, interactive zsh only honors `#` as a comment character when
+`setopt interactivecomments` is set — off by default. A handed-off command
+block with a trailing inline comment (`mise use ruby@3.1.2  # pins this
+directory`) works fine in a script or in bash, but pasted into a bare
+interactive zsh prompt, everything after `#` becomes literal extra
+arguments to the command instead of being stripped — confirmed directly:
+`mise use ruby@3.1.2 # pins this directory to 3.1.2` fed `mise` six bogus
+extra tool arguments (`#`, `pins`, `this`, `directory`, `to`, `3.1.2`),
+each rejected as an unknown tool, with an error list that gave no hint the
+real cause was shell parsing rather than anything about `mise` itself.
+Two independent fixes, not mutually exclusive: don't put inline `#`
+comments in any command block meant to be pasted straight into a terminal
+(explain in prose instead, or put the comment on its own line above);
+and/or add `setopt interactivecomments` to `~/.zshrc` so this stops being
+a footgun for every future paste, not just ones from a Claude hand-off.
+
+## `mise activate`'s PATH hook only fires on a new prompt, not mid-paste
+
+`mise activate zsh`'s shell hook recalculates `PATH` on prompt redraw (and
+directory change), not synchronously the instant a tool finishes installing.
+A handed-off block like:
+
+```
+mise use node@lts
+node -v
+```
+
+pasted and run as one sequential unit fails with `zsh: command not found:
+node` even though `mise use` genuinely installed it — `node -v` runs before
+the shell has had a chance to redraw a prompt and pick up the new `PATH`.
+Same root cause as "Interactive zsh doesn't treat `#` as a comment by
+default" above: a multi-command paste can outrun something the interactive
+shell only does between prompts. Two independent fixes: split the
+tool-install line into its own paste so a real prompt appears before the
+tool is used, or route around the hook entirely with `mise exec -- <cmd>`,
+which resolves mise's tools directly regardless of what's already in `PATH`.
+
 ## Handing off long text
 
 When the user needs to paste something substantial into another surface (a
