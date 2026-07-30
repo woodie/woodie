@@ -314,6 +314,26 @@ under a slightly-wrong key name fails identically to no values at all. See
 signing-plugin's own docs steer you toward a harder-to-get-right in-memory
 key format when a keyring-file path is simpler for a local machine.
 
+## RubyGems credentials: `gem` can create the API key itself
+
+Setting up `~/.gem/credentials` on a new machine doesn't require visiting
+rubygems.org first. Any authenticated `gem` command (e.g. `gem owner
+<gemname>`) run with no credentials file yet drops into an interactive
+sign-in: it asks for your rubygems.org username/email and password
+directly, then creates a brand-new API key on the spot and writes it to
+`~/.gem/credentials` for you — no manual "create a key, copy the value,
+paste it into a file" round trip needed at all.
+
+**The gotcha**: it then asks `Do you want to customise scopes? [yN]` —
+answering the default `n` creates a key scoped to `index_rubygems` only
+(read access), silently *not* `push_rubygem`/`yank_rubygem`. That looks
+identical to a correctly-scoped key (`gem owner` itself still works fine,
+since listing owners only needs read access) right up until you actually
+try to `gem push`, which fails on scope rather than on a bad credential.
+Answer `y` and pick the scopes the task actually needs, or skip the
+interactive flow and create the key manually on rubygems.org's API Keys
+page with the right checkboxes ticked up front.
+
 ## Handing off long text
 
 When the user needs to paste something substantial into another surface (a
