@@ -297,6 +297,23 @@ tool-install line into its own paste so a real prompt appears before the
 tool is used, or route around the hook entirely with `mise exec -- <cmd>`,
 which resolves mise's tools directly regardless of what's already in `PATH`.
 
+## Gradle `.properties` files: keys are case-sensitive, silently
+
+A mistyped property name in `gradle.properties` (`signing.KeyId` instead of
+`signing.keyId`) isn't rejected or warned about — Gradle just doesn't
+recognize it, so the property is silently ignored. The resulting failure
+(`./gradlew signMavenPublication` → "Cannot perform signing task ... because
+it has no configured signatory") gives no hint that a property name is the
+actual problem; it reads exactly like the signing config is entirely
+missing. When a Gradle task claims a whole feature isn't configured at all,
+check the *exact spelling and casing* of every required property before
+assuming a credential itself is wrong — a working set of correct values
+under a slightly-wrong key name fails identically to no values at all. See
+`~/workspace/GRADLE_PROPERTIES_RECOVERY.md` for the concrete case this hit
+(Maven Central signing for `humane-kotlin`/`kwick`), including why the
+signing-plugin's own docs steer you toward a harder-to-get-right in-memory
+key format when a keyring-file path is simpler for a local machine.
+
 ## Handing off long text
 
 When the user needs to paste something substantial into another surface (a
