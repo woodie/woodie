@@ -141,6 +141,20 @@ Mac regardless of how the request is phrased. The reliable pattern: commit
 and tag locally in the sandbox, hand the user the exact push/publish commands
 (as a copy-pasteable block), and let them run and confirm.
 
+**Don't hand off `git push` at all unless Woodie has explicitly asked for it
+in that turn.** Not even `&&`-chained after a check command. Flagged
+directly: "You are ... `git push` at the end of random things before
+running `npm run check` this is very dangerous" — the fix isn't a safer way
+to chain it, it's not including it by default in the first place. The
+default handoff after a commit is the check/verification command alone
+(`make check`, `npm run check`, `bundle exec rspec`, whatever the repo
+uses); stop there and let Woodie run it, read the result, and ask for the
+push himself once he's satisfied. Only include `git push` in a handoff when
+he's actually asked to push (or asked for both together, e.g. "run the
+tests and push") — and even then, gate it with `&&` after the check rather
+than as its own sequential line, per the reasoning above (a bare next line
+runs regardless of whether the check passed).
+
 ## Tagging releases
 
 Verify before tagging, every time — this account has a documented history of
