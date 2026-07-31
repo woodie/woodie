@@ -146,6 +146,45 @@ repo while Claude might still be working in it. If Woodie does want to commit
 something himself mid-session, say so first so Claude holds off on that repo
 until it's done.
 
+## Feature branches + PRs, not direct pushes to main
+
+Every real feature or code change goes through an issue and a PR, not a
+direct commit-then-push onto `main`/`master`. (A repo's own `docs/COWORK.md`
+is process bookkeeping, not shipped product, so edits there aren't gated by
+this.)
+
+1. File a `gh issue` describing the change before starting the work --
+   scoped tightly to what's changing and why, not a narrated tour of how the
+   code got here ("stay in your lane": no "back in 2019 someone posted this"
+   framing). `gh` needs network/credentials the sandbox doesn't have (see
+   "Pushing" below), so Claude drafts the title and body as a file and hands
+   off the `gh issue create --body-file ...` command, same pattern as
+   "Handing off long text" above.
+2. Do the work on a feature branch, created and committed to locally in the
+   sandbox -- same "commit freely, don't push" rule as always, just never
+   directly on `main`/`master`.
+3. Once verification (`make check`/equivalent) is clean, hand off the branch
+   push plus a `gh pr create` referencing the issue (`Closes #N`) instead of
+   a plain `git push` to `main`. `spec`'s `BeforeEach`/`AfterEach`/
+   `JustBeforeEach` work already went through exactly this shape earlier in
+   the account -- that's the default now, not something that needs asking
+   for each time.
+4. Woodie reviews and requests changes on the PR itself on GitHub, not via a
+   pasted `git diff` in chat -- pasting diffs for review slows things down;
+   a real PR is the review surface. Merge (and any remote branch cleanup,
+   e.g. `git remote prune origin` after a GitHub-side delete) happens once
+   he's satisfied.
+5. Once an issue captures a change's full rationale, keep the matching
+   `docs/COWORK.md` entry short -- a line or two of context plus the issue
+   number, not the full narrative duplicated in both places. History that's
+   fully captured in a closed issue doesn't need to also grow at length in
+   COWORK; prune an entry down once its issue exists rather than letting
+   both keep expanding in parallel.
+
+This doesn't change "Pushing" below -- Claude still never pushes (or opens
+PRs/issues) without being asked -- it changes what gets pushed: a feature
+branch by default, not `main`.
+
 ## Pushing
 
 Claude commits freely once changes are ready, but doesn't run `git push`
