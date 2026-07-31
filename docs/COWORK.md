@@ -228,7 +228,10 @@ a real behavior change, the sequence that's worked cleanly:
    `Package.swift` isn't enough, the lockfile (`Gemfile.lock`, `go.sum`,
    `Package.resolved`) needs a real fetch to pick up the right checksum/
    revision. None of this is possible from the sandbox (see "Pushing"), so
-   it's the user's own toolchain doing the resolving.
+   it's the user's own toolchain doing the resolving. **Commit the
+   regenerated lockfile in the same breath as the version bump** — see the
+   callout right below; this is the step that's actually gone wrong in
+   practice, not a hypothetical.
 4. Run that consumer's real test suite for confirmation, then decide whether
    the consumer itself needs its own version bump/tag (it does if the
    behavior change is user-visible, e.g. wording a person would notice).
@@ -237,6 +240,28 @@ a real behavior change, the sequence that's worked cleanly:
    logic) are safe to prune from each consumer's spec suite — see any of the
    three consumer repos' `docs/COWORK.md` for what "wiring vs. duplicate
    coverage" looks like in practice.
+
+**A hand-off that stops at "run `go mod tidy`, then `make check`" is a real
+trap, not just an incomplete one.** `go mod tidy` only touches the working
+tree; a local check/test run right after passes against that on-disk
+`go.sum`, whether or not it's committed. If the hand-off doesn't also say
+"commit `go.mod` *and* `go.sum` together," it's easy to `git commit` the
+version-string bump alone (that was the file already staged/expected),
+`git push` it, and only find out from CI that the lockfile never went
+along — a clean checkout has no leftover working-tree state to save it, so
+`go build`/`go test` fails immediately with `missing go.sum entry for
+module providing package ...`. Hit for real bumping `gorderly`, `lambada`,
+and `humane` to `expect v0.3.0` in the same session: `gorderly`'s CI caught
+it first; the fix each time was a *new* commit adding just the `go.sum`
+diff (never an amend of the already-pushed bump — see "Tagging releases"
+below for why), then a second push. One more wrinkle worth naming: once
+one repo's fix is confirmed, a CI failure notification from a sibling repo
+might already be stale — check the run's commit hash against what's
+actually on `origin/main` before assuming it reflects the just-pushed fix,
+rather than an earlier, already-resolved push. Going forward, any hand-off
+that includes `go mod tidy`/`bundle install`/`swift package update` spells
+out the commit step explicitly, in the same block as the version bump —
+never left as an assumed follow-up.
 
 ## Releasing across multiple repos
 
