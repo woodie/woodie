@@ -124,6 +124,28 @@ Note: older `docs/COWORK.md` files in this account (zouk, lambada) document a
 stricter workaround — "never run git from the sandbox" — established before
 `allow_cowork_file_delete` was available. That rule is superseded by the above.
 
+## Concurrent git access: pushing is safe, committing at the same time isn't
+
+The working copy is the same files on disk for both Woodie's own terminal and
+the Cowork sandbox, so the two can genuinely collide — but only on certain
+operations. `git push` (and `gh`, `git fetch`, `git ls-remote`) is a
+read-mostly network operation that doesn't touch `.git/index` or the working
+tree, so Woodie running it whenever he likes is safe even if Claude is mid-task
+in the same repo. `git add`/`git commit` (from either side) locks
+`.git/index`; if Woodie's terminal and the sandbox both try to write that lock
+at the same instant, one loses with `Unable to create '.git/index.lock': File
+exists` — a real collision, not the sandbox-permission case documented above.
+
+Since "Pushing" below already has Claude committing and Woodie doing the
+push/`gh`/tag-push side, this mostly resolves itself by division of labor — but
+worth Claude actively reminding Woodie of when handing off a push (or `gh
+release create`, or anything similar): stick to push/`gh`/fetch-type commands
+on your end, and let Claude keep doing the local `add`/`commit` in this
+session, rather than also running `git add`/`git commit` yourself in the same
+repo while Claude might still be working in it. If Woodie does want to commit
+something himself mid-session, say so first so Claude holds off on that repo
+until it's done.
+
 ## Pushing
 
 Claude commits freely once changes are ready, but doesn't run `git push`
