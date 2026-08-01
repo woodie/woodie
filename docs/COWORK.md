@@ -148,10 +148,22 @@ until it's done.
 
 ## Feature branches + PRs, not direct pushes to main
 
-Every real feature or code change goes through an issue and a PR, not a
-direct commit-then-push onto `main`/`master`. (A repo's own `docs/COWORK.md`
-is process bookkeeping, not shipped product, so edits there aren't gated by
-this.)
+Every real *implementation* change -- source that affects the tool's actual
+behavior: parsing/rendering logic, CLI flags, plugin wiring, and the like --
+goes through an issue and a PR, not a direct commit-then-push onto
+`main`/`master`.
+
+Everything else is a direct commit to `main`, no branch or PR needed: a
+repo's own `docs/COWORK.md` (process bookkeeping, not shipped product),
+READMEs and other docs, Makefile/tooling recipes, screenshots, and test
+*description* strings (the `it`/`context`/`describe` text itself, as
+opposed to what a test actually asserts). Concrete line from the
+kotidy/xctidy/gorderly/gomeleon README-restructure-plus-dogfood-screenshot
+session: Makefile output-style flags, README rewrites, and
+`render_test.go`'s wrapped-description shortening all landed straight on
+`main` across all four repos -- none of that touches `render.go`/
+`Engine.swift`/`KotidyPlugin.kt`'s actual rendering logic, so none of it
+needed a branch.
 
 1. File a `gh issue` describing the change before starting the work --
    scoped tightly to what's changing and why, not a narrated tour of how the
