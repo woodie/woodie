@@ -186,7 +186,19 @@ needed a branch.
    a real PR is the review surface. Merge (and any remote branch cleanup,
    e.g. `git remote prune origin` after a GitHub-side delete) happens once
    he's satisfied.
-5. Once an issue captures a change's full rationale, keep the matching
+5. Any change requested during that review lands as a **new commit** on the
+   branch, never an amend or rebase -- PRs get squash-merged at the end
+   regardless, so the branch's own commit history doesn't need to stay clean
+   along the way. Amending (or any other history rewrite) once a branch might
+   already be pushed requires a force push to update the remote, and a force
+   push is exactly the operation that can silently undo a merge. Confirmed
+   the hard way in `gorderly`: a stray `push -f` (unrelated to the PR itself)
+   reset `origin/main` back to its pre-merge commit, and recovery only
+   worked because the feature branch hadn't been deleted from the remote yet
+   and still held the merged content as a direct fast-forward ancestor.
+   Don't rely on that safety net existing next time -- new commits only,
+   never altered history, for anything that might already be shared.
+6. Once an issue captures a change's full rationale, keep the matching
    `docs/COWORK.md` entry short -- a line or two of context plus the issue
    number, not the full narrative duplicated in both places. History that's
    fully captured in a closed issue doesn't need to also grow at length in
