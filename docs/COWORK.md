@@ -175,18 +175,26 @@ needed a branch.
 2. Do the work on a feature branch, created and committed to locally in the
    sandbox -- same "commit freely, don't push" rule as always, just never
    directly on `main`/`master`.
-3. Once verification (`make check`/equivalent) is clean, hand off the branch
-   push plus a `gh pr create` referencing the issue (`Closes #N`) instead of
-   a plain `git push` to `main`. `spec`'s `BeforeEach`/`AfterEach`/
-   `JustBeforeEach` work already went through exactly this shape earlier in
-   the account -- that's the default now, not something that needs asking
-   for each time.
-4. Woodie reviews and requests changes on the PR itself on GitHub, not via a
+3. Before any automated check, manually test the actual change -- install
+   and run the tool (or whatever the repo's real usage looks like) and
+   confirm the output/behavior looks right, not just that it compiles.
+   `make check`/CI verify the code is well-formed; they don't verify the
+   change does what was intended. Concrete gap this caught: `gorderly`'s
+   PR #5 (the package-path indent fix) passed `make check` and CI, got
+   squash-merged, and only *after* merge did running it against `humane`
+   surface a second real issue (a missing blank line after the package-path
+   header) -- something manual testing before merge would have caught,
+   instead of needing a second PR to fix.
+4. Once manual testing looks right, run `make check`/equivalent and confirm
+   it's clean, then hand off the branch push plus a `gh pr create`
+   referencing the issue (`Closes #N`) instead of a plain `git push` to
+   `main`. `spec`'s `BeforeEach`/`AfterEach`/`JustBeforeEach` work already
+   went through exactly this shape earlier in the account -- that's the
+   default now, not something that needs asking for each time.
+5. Woodie reviews and requests changes on the PR itself on GitHub, not via a
    pasted `git diff` in chat -- pasting diffs for review slows things down;
-   a real PR is the review surface. Merge (and any remote branch cleanup,
-   e.g. `git remote prune origin` after a GitHub-side delete) happens once
-   he's satisfied.
-5. Any change requested during that review lands as a **new commit** on the
+   a real PR is the review surface.
+6. Any change requested during that review lands as a **new commit** on the
    branch, never an amend or rebase -- PRs get squash-merged at the end
    regardless, so the branch's own commit history doesn't need to stay clean
    along the way. Amending (or any other history rewrite) once a branch might
@@ -198,7 +206,10 @@ needed a branch.
    and still held the merged content as a direct fast-forward ancestor.
    Don't rely on that safety net existing next time -- new commits only,
    never altered history, for anything that might already be shared.
-6. Once an issue captures a change's full rationale, keep the matching
+7. Once he's satisfied, the PR is merged **squashing its commits** into one
+   (`gh pr merge --squash`), plus any remote branch cleanup (e.g. `git
+   remote prune origin` after a GitHub-side delete).
+8. Once an issue captures a change's full rationale, keep the matching
    `docs/COWORK.md` entry short -- a line or two of context plus the issue
    number, not the full narrative duplicated in both places. History that's
    fully captured in a closed issue doesn't need to also grow at length in
