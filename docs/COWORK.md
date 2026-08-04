@@ -306,6 +306,25 @@ missing whatever commit the tag was on. Don't treat a clean tag-push output
 as proof the preceding branch push also succeeded; check `git status -sb`
 for `ahead`/`behind` against the remote-tracking branch explicitly.
 
+**For a repo that publishes to a package registry (RubyGems, Gradle Plugin
+Portal, npm, etc.), the git tag itself carries no version information the
+registry cares about** — the real published version comes from a source
+file (a gem's `lib/<name>/version.rb`, a Gradle plugin's version property,
+whatever the ecosystem's own convention is), which the tag doesn't touch.
+Bumping only the tag and forgetting that file is a real, silent trap: `make
+check`/CI won't catch it (they don't build the actual package artifact),
+and "verify before tagging" above only confirms the tag points at the right
+*commit*, not that the commit's *version string* matches the tag. Hit for
+real: `rutidy`'s `v0.1.1` tag was created and pushed pointing at a commit
+where `lib/rutidy/version.rb` still said `VERSION = "0.1.0"` — `gem build`
+silently built `rutidy-0.1.0.gem` again, and the mismatch only surfaced when
+`gem push rutidy-0.1.1.gem` failed with "no such file." Fixed by bumping the
+version file as its own commit, deleting and recreating the tag on that new
+commit, then re-pushing both the branch and the corrected tag before
+rebuilding and pushing the gem. Going forward: bump the version file
+*before* creating the tag — same commit or the one right before it — never
+tag first and plan to backfill the version bump.
+
 ## Shared libraries across sibling repos
 
 `humane`/`humane-ruby`/`humane-swift` (consumed by `lambada`, `scandalous`,
