@@ -530,6 +530,34 @@ practice. A `present_files`'d markdown file plus the plain command (no
 inline heredoc) is the more robust handoff; offer the heredoc version only
 if asked for something scriptable.
 
+## Secrets in hand-offs: load into a named shell variable first
+
+When a step needs a secret (a passphrase, a token, a private key), never ask
+Woodie to type or paste the value itself into a prompt, and never put it in
+chat. Hand off two numbered commands instead:
+
+1. One that pulls the secret from wherever it already lives (a config file,
+   `gpg`, the keychain) into a short, descriptive shell variable, then
+   prints only its length as a sanity check -- never the value.
+2. One that uses the variable, piping it in on stdin (`printf '%s' "$VAR" |
+   gh secret set NAME`) rather than passing it as an argument.
+
+End with `unset` for every variable used. Concrete example, setting the
+Maven Central signing passphrase from `~/.gradle/gradle.properties`:
+
+```
+GPG_PASS=$(grep '^signing.password=' ~/.gradle/gradle.properties | cut -d= -f2-); echo ${#GPG_PASS}
+```
+```
+printf '%s' "$GPG_PASS" | gh secret set ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYPASSWORD
+```
+
+Variables only live in the terminal tab they were set in, so both steps run
+in the same tab. Why: keeping track of which secret goes into which prompt
+is exactly where things got confusing setting `humane-kotlin`'s signing
+secrets -- a named variable per secret keeps the values out of sight while
+the steps stay easy to follow and repeat.
+
 ## Command hand-offs: always cd to the repo first
 
 Woodie may have several terminals open across different repos at once, so a
