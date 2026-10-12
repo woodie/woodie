@@ -601,6 +601,16 @@ happens to be in" — start every hand-off with an explicit `cd
 to every command hand-off, not just git: the same ambiguity exists for
 `make`, `gh`, or any other repo-scoped command.
 
+## Hand-offs across machines: label every command, and go slowly
+
+When a task spans Woodie's Mac and a remote machine (the scan-server Pi,
+over SSH), start every command block's lead-in with **ON THE PI** or **ON
+YOUR MAC** in bold, and hand off one step at a time, waiting for its output
+before the next. Flipping between shells without a clear label is where
+commands get run in the wrong place. The Pi is slow too (an original
+32-bit Pi Zero-class board: `apt update` alone takes a minute), so don't
+batch several Pi steps together, and expect each to take a while.
+
 ## Working on unfamiliar stacks
 
 Some repos here are in languages or frameworks where the Cowork sandbox has no
