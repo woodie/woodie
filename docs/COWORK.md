@@ -558,6 +558,12 @@ Facts to lead with whenever a Maven Central publish (`humane-kotlin`,
   so it confirms both before anything touches GitHub secrets.
 - After a passing publish job, the deployment waits "Validated" on the
   Portal's Deployments page until Woodie clicks Publish.
+- **Gradle Plugin Portal (`kotidy`)** works the same way: the key pair is
+  `gradle.publish.key`/`gradle.publish.secret` in `~/.gradle/gradle.properties`,
+  and `./gradlew publishPlugins --validate-only` checks it without publishing
+  ("version ... exists already" means the key was accepted). `kotidy`'s
+  `GRADLE_PUBLISH_*` secrets were stale too ("Unauthorized!" on its `v0.1.1`
+  run) and were re-set from that file on 2026-10-12.
 
 ## Secrets in hand-offs: load into a named shell variable first
 
