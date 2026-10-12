@@ -424,8 +424,8 @@ Secrets are write-only. If a CI publish fails on a credential, the fix is
 re-setting that secret from a source Woodie still has (the GPG key in his
 current keyring, a fresh Central Portal user token) -- never reading it
 back, and never by rebuilding a local `gradle.properties`.
-`GRADLE_PROPERTIES_RECOVERY.md` (in the `macbook` folder of Woodie's Google
-Drive backup) describes the local-file setup and predates this.
+Woodie's `GRADLE_PROPERTIES_RECOVERY.md` notes describe the local-file setup
+and predate this.
 
 ## Remote/embedded shells
 
@@ -494,9 +494,8 @@ missing. When a Gradle task claims a whole feature isn't configured at all,
 check the *exact spelling and casing* of every required property before
 assuming a credential itself is wrong — a working set of correct values
 under a slightly-wrong key name fails identically to no values at all. See
-`GRADLE_PROPERTIES_RECOVERY.md` (Google Drive backup, `macbook` folder) for
-the concrete case this hit
-(Maven Central signing for `humane-kotlin`/`kwick`), including why the
+Woodie's `GRADLE_PROPERTIES_RECOVERY.md` notes for the concrete case this
+hit (Maven Central signing for `humane-kotlin`/`kwick`), including why the
 signing-plugin's own docs steer you toward a harder-to-get-right in-memory
 key format when a keyring-file path is simpler for a local machine.
 
