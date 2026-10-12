@@ -396,6 +396,37 @@ only move to the next block once the previous one's output looks right.
 Slower to hand off than one big paste, but nothing to untangle when a step
 in the middle goes sideways.
 
+## Publishing runs from GitHub Actions, not a local machine
+
+Woodie's original dev computer is gone. Before it was lost, every
+Gradle-ecosystem publishing credential went into GitHub Actions secrets, so
+for those repos the tag push *is* the release -- the workflow publishes,
+not a command run on whatever Mac is current:
+
+- `humane-kotlin`, `kwick`: a `v*` tag runs `CI.yml`'s `publish` job
+  (Maven Central via `com.vanniktech.maven.publish`, signing from the
+  `ORG_GRADLE_PROJECT_SIGNINGINMEMORY*` secrets). The deployment then sits
+  "Validated" on the Central Portal until Woodie clicks Publish.
+- `kotidy`: same pattern, Gradle Plugin Portal (`GRADLE_PUBLISH_KEY`/
+  `GRADLE_PUBLISH_SECRET`).
+- Go and Swift publish from the tag alone. The Ruby gem has no publish
+  workflow yet -- `gem push` still runs from Woodie's Mac.
+
+So a Gradle repo's release hand-off ends at pushing the tag, then checking
+the workflow run. Never hand off a local `./gradlew publishToMavenCentral`
+or `publishPlugins`: the current Mac has no publishing credentials in
+`~/.gradle/gradle.properties`, by design, and the run just fails with
+"mavenCentralUsername not found" -- hit for real releasing `humane-kotlin`
+`v0.1.2`. Check `.github/workflows/` for a tag-triggered `publish` job
+before assuming any registry needs a local command.
+
+Secrets are write-only. If a CI publish fails on a credential, the fix is
+re-setting that secret from a source Woodie still has (the GPG key in his
+current keyring, a fresh Central Portal user token) -- never reading it
+back, and never by rebuilding a local `gradle.properties`.
+`~/workspace/GRADLE_PROPERTIES_RECOVERY.md` (referenced below) describes
+the local-file setup and predates this.
+
 ## Remote/embedded shells
 
 `touch -d "N minutes ago"` (and similar natural-language relative dates) is
