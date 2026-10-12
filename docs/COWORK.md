@@ -424,8 +424,8 @@ Secrets are write-only. If a CI publish fails on a credential, the fix is
 re-setting that secret from a source Woodie still has (the GPG key in his
 current keyring, a fresh Central Portal user token) -- never reading it
 back, and never by rebuilding a local `gradle.properties`.
-`~/workspace/GRADLE_PROPERTIES_RECOVERY.md` (referenced below) describes
-the local-file setup and predates this.
+`GRADLE_PROPERTIES_RECOVERY.md` (in the `macbook` folder of Woodie's Google
+Drive backup) describes the local-file setup and predates this.
 
 ## Remote/embedded shells
 
@@ -494,7 +494,8 @@ missing. When a Gradle task claims a whole feature isn't configured at all,
 check the *exact spelling and casing* of every required property before
 assuming a credential itself is wrong — a working set of correct values
 under a slightly-wrong key name fails identically to no values at all. See
-`~/workspace/GRADLE_PROPERTIES_RECOVERY.md` for the concrete case this hit
+`GRADLE_PROPERTIES_RECOVERY.md` (Google Drive backup, `macbook` folder) for
+the concrete case this hit
 (Maven Central signing for `humane-kotlin`/`kwick`), including why the
 signing-plugin's own docs steer you toward a harder-to-get-right in-memory
 key format when a keyring-file path is simpler for a local machine.
@@ -529,6 +530,34 @@ paste into their terminal — a multi-line `gh issue close --comment "$(cat
 practice. A `present_files`'d markdown file plus the plain command (no
 inline heredoc) is the more robust handoff; offer the heredoc version only
 if asked for something scriptable.
+
+## Maven Central signing: what to tell Woodie next time
+
+Facts to lead with whenever a Maven Central publish (`humane-kotlin`,
+`kwick`) needs attention -- they're easy to lose track of between releases:
+
+- **The GPG passphrase is the `signing.password` line in
+  `~/.gradle/gradle.properties`.** Woodie doesn't need to remember it; any
+  step that needs it loads it from there (see "Secrets in hand-offs" below).
+- **Log into the Central Portal (central.sonatype.com) with GitHub OAuth**
+  ("Continue with GitHub"). Any other login route never works.
+- **The signing key is `EBA663A5`** (fingerprint
+  `F685E6812CBEFA250C5D0E389A201B4BEBA663A5`), created on the current Mac on
+  2026-07-30 and published to `keyserver.ubuntu.com`. Everything through
+  `humane-kotlin` `v0.1.1`/`kwick` `v0.1.2` was signed with the old
+  computer's key `7715C1FAA955F09D`, which is gone. Central accepts the new
+  key because its public half is on the keyserver; nothing already
+  published depended on the old one.
+- **Both repos' signing secrets now hold `EBA663A5`**, re-set 2026-10-12
+  after `humane-kotlin` `v0.1.2`'s first tag-triggered publish failed with
+  "no configured signatory". The Central user-token secrets
+  (`ORG_GRADLE_PROJECT_MAVENCENTRALUSERNAME`/`PASSWORD`) were untouched and
+  still worked.
+- **The local Gradle signing setup works as a no-network check:**
+  `./gradlew signMavenPublication` signs with the same key and passphrase,
+  so it confirms both before anything touches GitHub secrets.
+- After a passing publish job, the deployment waits "Validated" on the
+  Portal's Deployments page until Woodie clicks Publish.
 
 ## Secrets in hand-offs: load into a named shell variable first
 
