@@ -601,18 +601,20 @@ happens to be in" — start every hand-off with an explicit `cd
 to every command hand-off, not just git: the same ambiguity exists for
 `make`, `gh`, or any other repo-scoped command.
 
-## Hand-offs across machines: everything runs from the Mac
+## Hand-offs across machines: name the terminal, right above the command
 
-Woodie pastes a command into whichever terminal he's in, so the command
-itself has to be right for where he is, not just its label:
+Woodie keeps two terminals open, one on the Mac and one on the remote
+machine (the scan Pi), and pastes each command into whichever one he's told.
+He pastes into whatever terminal he's in, so where a command goes has to be
+impossible to miss:
 
-- **Run remote commands from the Mac via SSH.** Write Pi commands as
-  `ssh woodie@10.0.1.111 '<command>'` (keys are set up), so every block is
-  meant for the Mac terminal and there's never a Pi shell to keep track of.
-- **Put the location on its own line, directly above the code block**
-  (`**ON YOUR MAC:**`), with nothing between the label and the block. A label
-  at the end of a paragraph, or anything after two or three lines of prose,
-  doesn't get seen. Explanations go after the block, not before it.
+- **Name the terminal on its own line, directly above the code block**
+  (`**Pi terminal:**` or `**Mac terminal:**`), with nothing in between. A
+  label at the end of a paragraph, or after a few lines of prose, doesn't
+  get seen. Explanations go after the block.
+- **Write each command for the terminal it's meant for.** Don't wrap Pi
+  commands in `ssh` from the Mac; that mixes the two up instead of keeping
+  them apart.
 - **One step at a time,** waiting for its output before the next. The scan
   Pi is an original 32-bit Pi Zero-class board, so even `apt update` takes a
   minute; don't batch steps.
