@@ -586,6 +586,13 @@ GPG_PASS=$(grep '^signing.password=' ~/.gradle/gradle.properties | cut -d= -f2-)
 printf '%s' "$GPG_PASS" | gh secret set ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYPASSWORD
 ```
 
+When the secret only exists on a web page (a token GitHub just generated,
+say), read it from the terminal instead: hand off `read -rs NAME` first,
+say plainly that the prompt then waits with nothing on screen, and only then
+have him copy the secret and paste it there. Never `NAME=$(pbpaste)`:
+copying that command out of the chat replaces the secret on the clipboard,
+so the variable ends up holding the command.
+
 Variables only live in the terminal tab they were set in, so both steps run
 in the same tab. Why: keeping track of which secret goes into which prompt
 is exactly where things got confusing setting `humane-kotlin`'s signing
@@ -618,6 +625,22 @@ impossible to miss:
 - **One step at a time,** waiting for its output before the next. The scan
   Pi is an original 32-bit Pi Zero-class board, so even `apt update` takes a
   minute; don't batch steps.
+- **Say what's going to happen before the steps.** A short plan first (what
+  changes, on which machine, whether anyone will notice), then the steps,
+  each with one sentence on what it does and what output to expect.
+- **Look before changing anything on a server.** Read-only probes first
+  (what's running, how it's saved, what else touches it), then each `sudo`
+  change on its own, named and explained, with its undo command alongside.
+  The Pi's switch to nginx (lambada#21) went this way without a hitch.
+
+## Local development works away from home
+
+A dev setup must run entirely on the Mac: never route it through the scan
+Pi, which is only reachable on the home network. Where the real thing needs
+a Linux server (lambada's nginx WebDAV config), run it in Docker, and use the
+conventional tool for that: Docker Desktop (free for personal use and small
+businesses), not a lighter alternative that needs explaining (OrbStack's
+free tier is personal-use only; Colima is one more thing to start).
 
 ## Working on unfamiliar stacks
 
