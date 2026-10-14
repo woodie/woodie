@@ -610,9 +610,10 @@ to every command hand-off, not just git: the same ambiguity exists for
 
 ## Hand-offs across machines: name the terminal, right above the command
 
-Woodie keeps two terminals open, one on the Mac and one on the remote
-machine (the scan Pi), and pastes each command into whichever one he's told.
-He pastes into whatever terminal he's in, so where a command goes has to be
+This applies only when the work spans the Mac and a remote machine (the
+scan Pi). Mac-only work happens in one terminal, so those hand-offs don't
+name it. When the Pi is involved, Woodie keeps a terminal open on each and
+pastes into whichever one he's in, so where a command goes has to be
 impossible to miss:
 
 - **Name the terminal on its own line, directly above the code block**
