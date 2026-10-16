@@ -859,16 +859,32 @@ doesn't mistake it for arbitrary fixture setup. The rule is the same either
 way: if a value is standing in for something real, say so; the only thing
 that changes with complexity is one line versus several.
 
-## Prose: don't lead a sentence with a lowercase project name
+## Prose: never start a sentence lowercase
 
-Repo/library names stay lowercase in backticks (`expect`, `spec`, `gorderly`)
-to match their real package names, but that collides with English
-capitalization at the start of a sentence -- "`expect` is a matcher
-library..." reads like a typo. Rephrase so the name isn't the first word,
-rather than capitalizing it or dropping the backticks: "With `expect`,
-you get..." or "Using `gorderly`, ..." instead of "`expect` lets you...".
-Applies to README/COWORK prose; headers are fine either way (e.g. "###
-`expect`'s matcher list").
+Woodie hates a sentence that starts with a lowercase word. Project names
+stay lowercase to match their real package names (`expect`, `spec`,
+`gorderly`, lambada), and code identifiers keep their own case, but at the
+start of a sentence both read like a typo: "`expect` is a matcher
+library...", "lambada serves the scans...", "`justBeforeEach` runs after
+every `beforeEach`...". Rephrase so the first word is capitalized English,
+rather than capitalizing the name or dropping its backticks or link:
+
+- Put a capitalized noun in front of the name: "The [lambada scan
+  server](https://github.com/woodie/lambada) serves the scans...", "The
+  `lambada` program is a small mail server", "The nginx web server serves
+  the folder".
+- Or lead with a short clause: "With `expect`, you get...", "Since
+  `kwick` is only ever called from spec files, ...", "Because
+  `justBeforeEach` runs after every `beforeEach`, ...", "Here, `#divide`
+  sets default inputs...".
+- Bold bullet labels count as the start of a sentence too:
+  "**The nginx web server** serves..." rather than "**nginx** serves...".
+- App names that are capitalized as products (Zouk, Huck) are fine as
+  they are.
+
+Applies everywhere Woodie's prose is read: READMEs, `docs/`, COWORK files,
+site copy (`netpress`'s `data.js` blurbs) and blog outlines. Headers are
+fine either way (e.g. "### `expect`'s matcher list").
 
 ## Code style
 
