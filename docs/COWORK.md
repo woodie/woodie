@@ -146,6 +146,16 @@ repo while Claude might still be working in it. If Woodie does want to commit
 something himself mid-session, say so first so Claude holds off on that repo
 until it's done.
 
+## Every `.gitignore` lists `.DS_Store`
+
+Finder drops `.DS_Store` into any folder it opens, so a repo without the
+entry shows it as untracked sooner or later. Add `.DS_Store` to a new repo's
+`.gitignore` from the first commit, whatever language template it started
+from (the GitHub Node/Gradle/Ruby templates don't include it). Checked across
+`~/workspace` on 2026-10-15: all of Woodie's own repos now have it. The
+exception is `poaduai-2e-review`, a clone of someone else's repo, so it was
+left alone.
+
 ## Feature branches + PRs, not direct pushes to main
 
 Every real *implementation* change -- source that affects the tool's actual
